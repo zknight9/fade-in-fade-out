@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>淡入和淡出的效果</title>
+		<style type="text/css">
+			#div1{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				/* 兼容ie6 */
+				/* filter: alpha(opacity:30); */
+				/* 设置div元素背景颜色的初始浓度 */
+				opacity: 0.3;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+				// 获取文档中的元素节点，并赋值给变量
+				let oDiv=document.getElementById('div1');
+				// 给元素添加鼠标移入事件
+				oDiv.onmouseover=function(){
+					// 执行函数
+					startMove(100);
+				};
+				// 为元素添加鼠标移出事件
+				oDiv.onmouseout=function(){
+					startMove(30);
+				};
+			};
+			// 设置全局变量alpha，初始值为30.
+			let alpha=30;
+			// 设置全局变量
+			let timer=null;
+			// 定义一个有一个形参的函数
+			function startMove(iTarget){
+				// 把文档中的div元素节点赋值给变量
+				let oDiv=document.getElementById('div1');
+				// 清除定时器
+				clearInterval(timer);
+				// 把定时器赋值给变量timer
+				timer=setInterval(function(){
+					// 定义局部变量speed
+					let speed =0;
+					// 如果alpha小于函数中传入的实参，那么将会增加背景颜色的opcity属性值。一直到等于传入的实参为止。
+					// 反之也就是alpha大于或者等于传入的实参时，将会减少opcity的属性值。一直到等于传入的形参为止。
+					if(alpha<iTarget)
+					speed=10;
+					else
+					speed=-10;
+					if(alpha==iTarget)
+					clearInterval(timer);
+					else{
+						alpha+=speed;
+						// oDiv.style.filter='alpha(opacity:'+alpha+')';
+						oDiv.style.opacity=alpha/100;
+					}
+				},30);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="div1"></div>
+	</body>
+</html>
